@@ -1,0 +1,6 @@
+.ccls-cache
+CMakeCache.txt
+/CMakeFiles/
+Makefile
+Othello
+cmake_install.cmake
