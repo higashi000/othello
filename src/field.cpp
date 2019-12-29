@@ -5,7 +5,6 @@ namespace Othello {
 Field::Field()
 {
   tile = std::vector<std::vector<char>>(8, std::vector<char>(8, ' '));
-  canPut = std::vector<std::vector<POS>>(8, std::vector<POS>(8, {-1, -1}));
 
   tile[3][3] = 'W';
   tile[4][4] = 'W';
