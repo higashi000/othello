@@ -24,10 +24,14 @@ void Field::dispField()
     std::cout << "|---+---+---+---+---+---+---+---|" << std::endl;
   }
 
-  int cnt = 1;
-  for (auto i: canPutPos) {
-    std::cout << cnt << ": " << i.second << " " << i.first << std::endl;
-    cnt++;
+  if (canPutPos.size() < 1) {
+    std::cout << "0: pass" << std::endl;
+  } else {
+    int cnt = 1;
+    for (auto i: canPutPos) {
+      std::cout << cnt << ": " << i.second << " " << i.first << std::endl;
+      cnt++;
+    }
   }
 }
 
@@ -66,6 +70,7 @@ bool Field::canPut(int y, int x, bool player)
     while (1) {
       if (0 > x + tmpDX || x + tmpDX >= 8 || 0 > y + tmpDY || y + tmpDY >= 8) break;
       if (tile[y + tmpDY][x + tmpDX] == ' ') break;
+      if (tile[y + tmpDY][x + tmpDX] == playerPice && !flg) break;
       if (tile[y + tmpDY][x + tmpDX] == enemyPice) flg = true;
       if (tile[y + tmpDY][x + tmpDX] == playerPice && flg) return true;
 
@@ -94,6 +99,7 @@ std::vector<int> Field::reverseDir(int y, int x, bool player)
     while (1) {
       if (0 > x + tmpDX || x + tmpDX >= 8 || 0 > y + tmpDY || y + tmpDY >= 8) break;
       if (tile[y + tmpDY][x + tmpDX] == ' ') break;
+      if (tile[y + tmpDY][x + tmpDX] == playerPice && !flg) break;
       if (tile[y + tmpDY][x + tmpDX] == enemyPice) flg = true;
       if (tile[y + tmpDY][x + tmpDX] == playerPice && flg) {
         canPutDir.push_back(i);
@@ -110,6 +116,8 @@ std::vector<int> Field::reverseDir(int y, int x, bool player)
 
 void Field::reversePice(int num, bool player)
 {
+  if (num < 0 || canPutPos.size() <= num) return;
+
   auto canPutDir = reverseDir(canPutPos[num].first, canPutPos[num].second, player);
   int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
   int dy[] = {0, -1, -1, -1, 0, 1, 1, 1};
