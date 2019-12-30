@@ -22,6 +22,8 @@ class Field {
     bool canPut(int y, int x, bool player);
     void calcPoint();
     void dispField();
+    std::vector<int> reverseDir(int y, int x, bool player);
+    void reversePice(int num, bool player);
 };
 
 }; // namespace Othello

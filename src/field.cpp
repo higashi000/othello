@@ -24,7 +24,7 @@ void Field::dispField()
     std::cout << "|---+---+---+---+---+---+---+---|" << std::endl;
   }
 
-  char cnt = 'a';
+  int cnt = 1;
   for (auto i: canPutPos) {
     std::cout << cnt << ": " << i.second << " " << i.first << std::endl;
     cnt++;
@@ -33,8 +33,9 @@ void Field::dispField()
 
 void Field::searchPutPos(bool player)
 {
+  canPutPos = std::vector<POS>(0);
   std::copy(tile.begin(), tile.end(), display.begin());
-  char cnt = 'a';
+  char cnt = '1';
 
   for (int i = 0; i < 8; ++i) {
     for (int j = 0; j < 8; ++j) {
@@ -55,7 +56,6 @@ bool Field::canPut(int y, int x, bool player)
   char playerPice = (player ? 'B' : 'W');
   char enemyPice = (!player ? 'B' : 'W');
 
-
   int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
   int dy[] = {0, -1, -1, -1, 0, 1, 1, 1};
 
@@ -75,6 +75,62 @@ bool Field::canPut(int y, int x, bool player)
   }
 
   return false;
+}
+
+std::vector<int> Field::reverseDir(int y, int x, bool player)
+{
+  char playerPice = (player ? 'B' : 'W');
+  char enemyPice = (!player ? 'B' : 'W');
+
+  std::vector<int> canPutDir;
+
+  int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+  int dy[] = {0, -1, -1, -1, 0, 1, 1, 1};
+
+  for (int i = 0; i < 8; ++i) {
+    int tmpDX = dx[i];
+    int tmpDY = dy[i];
+    bool flg = false;
+    while (1) {
+      if (0 > x + tmpDX || x + tmpDX >= 8 || 0 > y + tmpDY || y + tmpDY >= 8) break;
+      if (tile[y + tmpDY][x + tmpDX] == ' ') break;
+      if (tile[y + tmpDY][x + tmpDX] == enemyPice) flg = true;
+      if (tile[y + tmpDY][x + tmpDX] == playerPice && flg) {
+        canPutDir.push_back(i);
+        break;
+      }
+
+      tmpDX += dx[i];
+      tmpDY += dy[i];
+    }
+  }
+
+  return canPutDir;
+}
+
+void Field::reversePice(int num, bool player)
+{
+  auto canPutDir = reverseDir(canPutPos[num].first, canPutPos[num].second, player);
+  int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+  int dy[] = {0, -1, -1, -1, 0, 1, 1, 1};
+  char playerPice = (player ? 'B' : 'W');
+  char enemyPice = (!player ? 'B' : 'W');
+
+  tile[canPutPos[num].first][canPutPos[num].second] = playerPice;
+
+  for (auto i: canPutDir) {
+    int tmpDX = dx[i] + canPutPos[num].second;
+    int tmpDY = dy[i] + canPutPos[num].first;
+
+    while (1) {
+      if (tile[tmpDY][tmpDX] == playerPice) break;
+
+      tile[tmpDY][tmpDX] = playerPice;
+
+      tmpDX += dx[i];
+      tmpDY += dy[i];
+    }
+  }
 }
 
 }; // namespace Othello
