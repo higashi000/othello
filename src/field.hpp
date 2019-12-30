@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <iostream>
+#include <queue>
+#include <cmath>
 
 namespace Othello {
 
@@ -10,12 +12,14 @@ namespace Othello {
 
 class Field {
   private:
-    std::vector<std::vector<POS>> canPut;
+    std::vector<POS> canPutPos;
     std::vector<std::vector<char>> tile;
+    std::vector<std::vector<char>> display;
 
   public:
     Field();
     void searchPutPos(bool player);
+    bool canPut(int y, int x, bool player);
     void calcPoint();
     void dispField();
 };
