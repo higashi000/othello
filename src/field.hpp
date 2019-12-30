@@ -9,6 +9,7 @@
 namespace Othello {
 
 #define POS std::pair<int, int>
+#define POINT std::pair<int, int>
 
 class Field {
   private:
@@ -20,10 +21,11 @@ class Field {
     Field();
     void searchPutPos(bool player);
     bool canPut(int y, int x, bool player);
-    void calcPoint();
+    POINT calcPoint();
     void dispField();
     std::vector<int> reverseDir(int y, int x, bool player);
     void reversePice(int num, bool player);
+    bool checkFinish();
 };
 
 }; // namespace Othello

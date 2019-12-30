@@ -133,4 +133,29 @@ void Field::reversePice(int num, bool player)
   }
 }
 
+bool Field::checkFinish()
+{
+  for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+      if (tile[i][j] == ' ') return false;
+    }
+  }
+
+  return true;
+}
+
+POINT Field::calcPoint()
+{
+  POINT point;
+
+  for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+      if (tile[i][j] == 'B') point.first++;
+      if (tile[i][j] == 'W') point.second++;
+    }
+  }
+
+  return point;
+}
+
 }; // namespace Othello
