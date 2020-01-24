@@ -15,6 +15,7 @@ set(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG -march=x86-64")
 set(SOURCE_FILES
   "src/main.cpp"
   "src/field.cpp"
+  "src/beamSearch.cpp"
 )
 
 add_executable(Othello ${SOURCE_FILES})
