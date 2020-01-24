@@ -11,7 +11,7 @@ namespace Othello {
 #define POS std::pair<int, int>
 #define POINT std::pair<int, int>
 
-class Field {
+struct Field {
   private:
     std::vector<POS> canPutPos;
     std::vector<std::vector<char>> tile;
@@ -19,6 +19,7 @@ class Field {
 
   public:
     Field();
+    Field(std::vector<std::vector<char>> beforTile, int x, int y, bool whichPlayer);
     void searchPutPos(bool player);
     bool canPut(int y, int x, bool player);
     POINT calcPoint();

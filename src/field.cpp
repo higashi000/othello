@@ -13,6 +13,16 @@ Field::Field()
   tile[3][4] = 'B';
 }
 
+Field::Field(std::vector<std::vector<char>> beforTile, int x, int y, bool player)
+{
+  tile = std::vector<std::vector<char>>(8, std::vector<char>(8, ' '));
+  display = std::vector<std::vector<char>>(8, std::vector<char>(8, ' '));
+
+  std::copy(beforTile.begin(), beforTile.end(), tile.begin());
+
+  tile[y][x] = (whichPlayer ? 'B' : 'W');
+}
+
 void Field::dispField()
 {
   std::cout << "|---+---+---+---+---+---+---+---|" << std::endl;
