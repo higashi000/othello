@@ -20,7 +20,7 @@ Field::Field(std::vector<std::vector<char>> beforTile, int x, int y, bool player
 
   std::copy(beforTile.begin(), beforTile.end(), tile.begin());
 
-  tile[y][x] = (whichPlayer ? 'B' : 'W');
+  tile[y][x] = (player ? 'B' : 'W');
 }
 
 void Field::dispField()

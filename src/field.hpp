@@ -12,12 +12,11 @@ namespace Othello {
 #define POINT std::pair<int, int>
 
 struct Field {
-  private:
+  public:
     std::vector<POS> canPutPos;
     std::vector<std::vector<char>> tile;
     std::vector<std::vector<char>> display;
 
-  public:
     Field();
     Field(std::vector<std::vector<char>> beforTile, int x, int y, bool whichPlayer);
     void searchPutPos(bool player);
